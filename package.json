@@ -1,0 +1,25 @@
+{
+  "name": "cms-server-node",
+  "version": "1.0.0",
+  "description": "用于学习的cms node 服务端",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/double-chen/cms-server-node.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/double-chen/cms-server-node/issues"
+  },
+  "homepage": "https://github.com/double-chen/cms-server-node#readme",
+  "dependencies": {
+    "koa": "^2.15.3",
+    "koa-bodyparser": "^4.4.1",
+    "koa-router": "^12.0.1"
+  }
+}
