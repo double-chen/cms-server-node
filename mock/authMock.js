@@ -1,11 +1,11 @@
 const Mock = require('mockjs');
 
-async function getMenuList() {
+function getMenuList(ctx) {
+  const { headers } = ctx.request;
   return {
     code: 200,
-    data: function ({ _req }) {
-      let header = _req.header;
-      if (header['x-access-token'] === 'bqddxxwqmfncffacvbpkuxvwvqrhln') {
+    data: (function () {
+      if (headers['x-access-token'] === 'bqddxxwqmfncffacvbpkuxvwvqrhln') {
         return [
           {
             path: '/home/index',
@@ -1125,7 +1125,7 @@ async function getMenuList() {
           },
         ];
       }
-      if (header['x-access-token'] === 'unufvdotdqxuzfbdygovfmsbftlvbn') {
+      if (headers['x-access-token'] === 'unufvdotdqxuzfbdygovfmsbftlvbn') {
         return [
           {
             path: '/home/index',
@@ -1755,11 +1755,40 @@ async function getMenuList() {
           },
         ];
       }
-    },
+    })(),
+    msg: '成功',
+  };
+}
+
+function getAuthButtons(ctx) {
+  const { headers } = ctx.request;
+  return {
+    code: 200,
+    data: (function () {
+      if (headers['x-access-token'] === 'bqddxxwqmfncffacvbpkuxvwvqrhln') {
+        return {
+          useProTable: ['add', 'batchAdd', 'export', 'batchDelete', 'status'],
+          authButton: ['add', 'edit', 'delete', 'import', 'export'],
+          article: ['add', 'edit', 'delete'],
+          category: ['add', 'edit', 'delete'],
+          tag: ['add', 'edit', 'delete'],
+        };
+      }
+      if (headers['x-access-token'] === 'unufvdotdqxuzfbdygovfmsbftlvbn') {
+        return {
+          useProTable: ['add', 'batchDelete'],
+          authButton: ['add', 'edit', 'delete', 'import', 'export'],
+          article: ['add', 'edit', 'delete'],
+          category: ['add', 'edit', 'delete'],
+          tag: ['add', 'edit', 'delete'],
+        };
+      }
+    })(),
     msg: '成功',
   };
 }
 
 module.exports = {
   getMenuList,
+  getAuthButtons,
 };

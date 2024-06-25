@@ -1,9 +1,9 @@
 const config = require('../config');
 const authMock = require('../mocks/authMock');
 
-async function getMenuList() {
+async function getMenuList(ctx) {
   if (config.useMock) {
-    return authMock.getMenuList();
+    return authMock.getMenuList(ctx);
   }
 }
 
