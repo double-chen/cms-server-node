@@ -48,6 +48,18 @@ class UserController {
   async importUser(ctx) {
     return userModel.importUser(ctx);
   }
+
+  async getRoleList(ctx) {
+    return userModel.getRoleList(ctx);
+  }
+
+  async getUserTreeList(ctx) {
+    return userModel.getUserTreeList(ctx);
+  }
+
+  async changeUser(ctx) {
+    return userModel.changeUser(ctx);
+  }
 }
 
 module.exports = new UserController();

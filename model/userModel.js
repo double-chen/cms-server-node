@@ -73,6 +73,24 @@ async function importUser(ctx) {
   }
 }
 
+async function getRoleList(ctx) {
+  if (config.useMock) {
+    return userMock.getRoleList(ctx);
+  }
+}
+
+async function getUserTreeList(ctx) {
+  if (config.useMock) {
+    return userMock.getUserTreeList(ctx);
+  }
+}
+
+async function changeUser(ctx) {
+  if (config.useMock) {
+    return userMock.changeUser(ctx);
+  }
+}
+
 module.exports = {
   login,
   logout,
@@ -86,4 +104,7 @@ module.exports = {
   resetUserPassword,
   exportUser,
   importUser,
+  getRoleList,
+  getUserTreeList,
+  changeUser,
 };
