@@ -1,14 +1,13 @@
-const config = require('../config');
 const authMock = require('../mock/authMock');
 
 async function getMenuList(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return authMock.getMenuList(ctx);
   }
 }
 
 async function getAuthButtons(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return authMock.getAuthButtons(ctx);
   }
 }

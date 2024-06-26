@@ -2,11 +2,13 @@ const authModel = require('../model/authModel');
 
 class AuthController {
   async getMenuList(ctx) {
-    return authModel.getMenuList(ctx);
+    const result = await authModel.getMenuList(ctx);
+    ctx.body = result;
   }
 
   async getAuthButtons(ctx) {
-    return authModel.getAuthButtons(ctx);
+    const result = await authModel.getAuthButtons(ctx);
+    ctx.body = result;
   }
 }
 

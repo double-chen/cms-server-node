@@ -1,92 +1,91 @@
-const config = require('../config');
 const userMock = require('../mock/userMock');
 
 async function login(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.login(ctx);
   }
 }
 
 async function logout(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.logout(ctx);
   }
 }
 
 async function getUserGender(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.getUserGender(ctx);
   }
 }
 
 async function getUserStatus(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.getUserStatus(ctx);
   }
 }
 
 async function getUserList(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.getUserList(ctx);
   }
 }
 
 async function getUserDepartment(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.getUserDepartment(ctx);
   }
 }
 
 async function addUser(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.addUser(ctx);
   }
 }
 
 async function editUser(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.editUser(ctx);
   }
 }
 
 async function deleteUser(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.deleteUser(ctx);
   }
 }
 
 async function resetUserPassword(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.resetUserPassword(ctx);
   }
 }
 
 async function exportUser(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.exportUser(ctx);
   }
 }
 
 async function importUser(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.importUser(ctx);
   }
 }
 
 async function getRoleList(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.getRoleList(ctx);
   }
 }
 
 async function getUserTreeList(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.getUserTreeList(ctx);
   }
 }
 
 async function changeUser(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return userMock.changeUser(ctx);
   }
 }

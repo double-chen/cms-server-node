@@ -2,19 +2,23 @@ const tagModel = require('../model/tagModel');
 
 class TagController {
   async getTagList(ctx) {
-    return tagModel.getTagList(ctx);
+    const result = await tagModel.getTagList(ctx);
+    ctx.body = result;
   }
 
   async addTag(ctx) {
-    return tagModel.addTag(ctx);
+    const result = await tagModel.addTag(ctx);
+    ctx.body = result;
   }
 
   async editTag(ctx) {
-    return tagModel.editTag(ctx);
+    const result = await tagModel.editTag(ctx);
+    ctx.body = result;
   }
 
   async deleteTag(ctx) {
-    return tagModel.deleteTag(ctx);
+    const result = await tagModel.deleteTag(ctx);
+    ctx.body = result;
   }
 }
 

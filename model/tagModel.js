@@ -1,26 +1,25 @@
-const config = require('../config');
 const tagMock = require('../mock/tagMock');
 
 async function getTagList(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return tagMock.getTagList(ctx);
   }
 }
 
 async function addTag(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return tagMock.addTag(ctx);
   }
 }
 
 async function editTag(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return tagMock.editTag(ctx);
   }
 }
 
 async function deleteTag(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return tagMock.deleteTag(ctx);
   }
 }

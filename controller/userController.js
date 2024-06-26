@@ -2,63 +2,78 @@ const userModel = require('../model/userModel');
 
 class UserController {
   async login(ctx) {
-    return userModel.login(ctx);
+    const result = userModel.login(ctx);
+    ctx.body = result;
   }
 
   async logout(ctx) {
-    return userModel.logout(ctx);
+    const result = await userModel.logout(ctx);
+    ctx.body = result;
   }
 
   async getUserGender(ctx) {
-    return userModel.getUserGender(ctx);
+    const result = await userModel.getUserGender(ctx);
+    ctx.body = result;
   }
 
   async getUserStatus(ctx) {
-    return userModel.getUserStatus(ctx);
+    const result = await userModel.getUserStatus(ctx);
+    ctx.body = result;
   }
 
   async getUserList(ctx) {
-    return userModel.getUserList(ctx);
+    const result = await userModel.getUserList(ctx);
+    ctx.body = result;
   }
 
   async getUserDepartment(ctx) {
-    return userModel.getUserDepartment(ctx);
+    const result = await userModel.getUserDepartment(ctx);
+    ctx.body = result;
   }
 
   async addUser(ctx) {
-    return userModel.addUser(ctx);
+    const result = await userModel.addUser(ctx);
+    ctx.body = result;
   }
 
   async editUser(ctx) {
-    return userModel.editUser(ctx);
+    const result = await userModel.editUser(ctx);
+    ctx.body = result;
   }
 
   async deleteUser(ctx) {
-    return userModel.deleteUser(ctx);
+    const result = await userModel.deleteUser(ctx);
+    ctx.body = result;
   }
 
   async resetUserPassword(ctx) {
-    return userModel.resetUserPassword(ctx);
+    const result = await userModel.resetUserPassword(ctx);
+    ctx.body = result;
   }
 
   async exportUser(ctx) {
-    return userModel.exportUser(ctx);
+    const result = await userModel.exportUser(ctx);
+    ctx.body = result;
   }
 
   async importUser(ctx) {
-    return userModel.importUser(ctx);
+    const result = await userModel.importUser(ctx);
+    ctx.body = result;
   }
 
   async getRoleList(ctx) {
-    return userModel.getRoleList(ctx);
+    const result = await userModel.getRoleList(ctx);
+    ctx.body = result;
   }
 
   async getUserTreeList(ctx) {
-    return userModel.getUserTreeList(ctx);
+    const result = await userModel.getUserTreeList(ctx);
+    ctx.body = result;
   }
 
   async changeUser(ctx) {
-    return userModel.changeUser(ctx);
+    const result = await userModel.changeUser(ctx);
+    ctx.body = result;
   }
 }
 

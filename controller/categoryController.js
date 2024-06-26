@@ -2,19 +2,23 @@ const categoryModel = require('../model/categoryModel');
 
 class CategoryController {
   async getCategoryList(ctx) {
-    return categoryModel.getCategoryList(ctx);
+    const result = await categoryModel.getCategoryList(ctx);
+    ctx.body = result;
   }
 
   async addCategory(ctx) {
-    return categoryModel.addCategory(ctx);
+    const result = await categoryModel.addCategory(ctx);
+    ctx.body = result;
   }
 
   async editCategory(ctx) {
-    return categoryModel.editCategory(ctx);
+    const result = await categoryModel.editCategory(ctx);
+    ctx.body = result;
   }
 
   async deleteCategory(ctx) {
-    return categoryModel.deleteCategory(ctx);
+    const result = await categoryModel.deleteCategory(ctx);
+    ctx.body = result;
   }
 }
 

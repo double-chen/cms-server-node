@@ -1,26 +1,25 @@
-const config = require('../config');
 const articleMock = require('../mock/articleMock');
 
 async function getArticleList(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return articleMock.getArticleList(ctx);
   }
 }
 
 async function addArticle(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return articleMock.addArticle(ctx);
   }
 }
 
 async function editArticle(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return articleMock.editArticle(ctx);
   }
 }
 
 async function deleteArticle(ctx) {
-  if (config.useMock) {
+  if (process.env.USE_MOCK) {
     return articleMock.deleteArticle(ctx);
   }
 }

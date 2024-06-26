@@ -2,11 +2,13 @@ const fileModel = require('../model/fileModel');
 
 class FileController {
   async uploadImg(ctx) {
-    return fileModel.uploadImg(ctx);
+    const result = await fileModel.uploadImg(ctx);
+    ctx.body = result;
   }
 
   async uploadVideo(ctx) {
-    return fileModel.uploadVideo(ctx);
+    const result = await fileModel.uploadVideo(ctx);
+    ctx.body = result;
   }
 }
 

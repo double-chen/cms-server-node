@@ -2,19 +2,23 @@ const articleModel = require('../model/articleModel');
 
 class ArticleController {
   async getArticleList(ctx) {
-    return articleModel.getArticleList(ctx);
+    const result = await articleModel.getArticleList(ctx);
+    ctx.body = result;
   }
 
   async addArticle(ctx) {
-    return articleModel.addArticle(ctx);
+    const result = await articleModel.addArticle(ctx);
+    ctx.body = result;
   }
 
   async editArticle(ctx) {
-    return articleModel.editArticle(ctx);
+    const result = await articleModel.editArticle(ctx);
+    ctx.body = result;
   }
 
   async deleteArticle(ctx) {
-    return articleModel.deleteArticle(ctx);
+    const result = await articleModel.deleteArticle(ctx);
+    ctx.body = result;
   }
 }
 
