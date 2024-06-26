@@ -2,7 +2,7 @@ const userModel = require('../model/userModel');
 
 class UserController {
   async login(ctx) {
-    const result = userModel.login(ctx);
+    const result = await userModel.login(ctx);
     ctx.body = result;
   }
 
