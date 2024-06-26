@@ -4,7 +4,8 @@
   "description": "用于学习的cms node 服务端",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "cross-env NODE_ENV=development npx nodemon app.js",
+    "start": "cross-env NODE_ENV=production node app.js"
   },
   "repository": {
     "type": "git",
@@ -21,8 +22,11 @@
     "@koa/bodyparser": "^5.0.0",
     "@koa/cors": "^5.0.0",
     "@koa/router": "^12.0.1",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
     "koa": "^2.15.3",
     "koa-compress": "^5.1.1",
-    "mockjs": "^1.1.0"
+    "mockjs": "^1.1.0",
+    "nodemon": "^3.1.3"
   }
 }
