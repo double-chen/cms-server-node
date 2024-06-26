@@ -32,6 +32,26 @@ function getRouter() {
   router.post('/user/change', userController.changeUser);
 
   // 文件相关
+  router.post('/file/upload/img', fileController.uploadImg);
+  router.post('/file/upload/video', fileController.uploadVideo);
+
+  // 文章相关
+  router.post('/article/list', articleController.getArticleList);
+  router.post('/article/add', articleController.addArticle);
+  router.post('/article/edit', articleController.editArticle);
+  router.post('/article/delete', articleController.deleteArticle);
+
+  // 文章分类
+  router.post('/category/list', categoryController.getCategoryList);
+  router.post('/category/add', categoryController.addCategory);
+  router.post('/category/edit', categoryController.editCategory);
+  router.post('/category/delete', categoryController.deleteCategory);
+
+  // 文章标签
+  router.post('/tag/list', tagController.getTagList);
+  router.post('/tag/add', tagController.addTag);
+  router.post('/tag/edit', tagController.editTag);
+  router.post('/tag/delete', tagController.deleteTag);
 
   return router.routes();
 }
