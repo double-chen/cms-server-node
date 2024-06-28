@@ -1,4 +1,5 @@
 const dayjs = require('dayjs');
+const { v4: uuidv4 } = require('uuid');
 const articleMock = require('../mock/articleMock');
 const db = require('../utils/db');
 const config = require('../config');
@@ -103,21 +104,15 @@ async function getArticleList(resParams) {
 }
 
 async function addArticle(reqParams) {
-  if (process.env.USE_MOCK) {
+  if (config.useMock) {
     return articleMock.addArticle(reqParams);
   }
-  const {
-    id,
-    title,
-    content,
-    summary,
-    categoryId,
-    tagIds,
-    thumbnail,
-    isPublish,
-    createTime,
-    updateTime,
-  } = reqParams;
+  const { title, content, summary, categoryId, tagIds, thumbnail, isPublish } =
+    reqParams;
+
+  const id = uuidv4();
+  const createTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
+  const updateTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
 
   const sql = `
         INSERT INTO Article (
@@ -146,7 +141,7 @@ async function addArticle(reqParams) {
     updateTime,
   ];
   const result = await db.query(sql, params);
-  return result.insertId;
+  return result;
 }
 
 async function editArticle(reqParams) {

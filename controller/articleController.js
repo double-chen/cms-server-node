@@ -10,7 +10,11 @@ class ArticleController {
   async addArticle(ctx) {
     const params = ctx.request.body;
     const result = await articleModel.addArticle(params);
-    ctx.body = result;
+    if (result.affectedRows > 0) {
+      ctx.body = { insertId: result.insertId };
+    } else {
+      ctx.throw(500, '创建文章失败');
+    }
   }
 
   async editArticle(ctx) {

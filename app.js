@@ -6,6 +6,7 @@ require('./utils/dotenv').config();
 const getRouter = require('./router');
 const notFound = require('./middleware/404');
 const compress = require('./middleware/compress');
+const responseFormatter = require('./middleware/responseFormatter');
 
 function start({ port, host } = {}) {
   const app = new Koa();
@@ -18,6 +19,7 @@ function start({ port, host } = {}) {
       })
     )
     .use(notFound)
+    .use(responseFormatter)
     .use(router)
     .use(compress);
 
