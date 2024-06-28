@@ -17,6 +17,13 @@ function getTagList(ctx) {
   })();
 }
 
+function getTagById(id) {
+  return Mock.mock({
+    id,
+    name: '@ctitle(5, 10)',
+  });
+}
+
 function addTag() {
   return 1;
 }
@@ -31,6 +38,7 @@ function deleteTag() {
 
 module.exports = {
   getTagList,
+  getTagById,
   addTag,
   editTag,
   deleteTag,

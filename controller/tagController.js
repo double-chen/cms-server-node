@@ -6,6 +6,12 @@ class TagController {
     ctx.body = result;
   }
 
+  async getTagById(ctx) {
+    const params = ctx.query;
+    const result = await tagModel.getTagById(params.id);
+    ctx.body = result;
+  }
+
   async addTag(ctx) {
     const result = await tagModel.addTag(ctx);
     ctx.body = result;

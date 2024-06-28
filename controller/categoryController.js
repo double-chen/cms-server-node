@@ -6,6 +6,12 @@ class CategoryController {
     ctx.body = result;
   }
 
+  async getCategoryById(ctx) {
+    const params = ctx.query;
+    const result = await categoryModel.getCategoryById(params.id);
+    ctx.body = result;
+  }
+
   async addCategory(ctx) {
     const result = await categoryModel.addCategory(ctx);
     ctx.body = result;

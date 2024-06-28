@@ -7,6 +7,12 @@ async function getCategoryList(ctx) {
   }
 }
 
+async function getCategoryById(id) {
+  if (config.useMock) {
+    return categoryMock.getCategoryById(ctx);
+  }
+}
+
 async function addCategory(ctx) {
   if (config.useMock) {
     return categoryMock.addCategory(ctx);
@@ -27,6 +33,7 @@ async function deleteCategory(ctx) {
 
 module.exports = {
   getCategoryList,
+  getCategoryById,
   addCategory,
   editCategory,
   deleteCategory,

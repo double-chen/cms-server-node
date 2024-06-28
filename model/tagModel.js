@@ -7,6 +7,12 @@ async function getTagList(ctx) {
   }
 }
 
+async function getTagById(id) {
+  if (config.useMock) {
+    return tagMock.getTagById(id);
+  }
+}
+
 async function addTag(ctx) {
   if (config.useMock) {
     return tagMock.addTag(ctx);
@@ -19,9 +25,9 @@ async function editTag(ctx) {
   }
 }
 
-async function deleteTag(ctx) {
+async function deleteTag(id) {
   if (config.useMock) {
-    return tagMock.deleteTag(ctx);
+    return tagMock.deleteTag(id);
   }
 }
 
@@ -30,4 +36,5 @@ module.exports = {
   addTag,
   editTag,
   deleteTag,
+  getTagById,
 };

@@ -15,47 +15,17 @@ function getCategoryList(ctx) {
         'list|10': [
           {
             id: '@string(number,18)',
-            username: query.username ? query.username : '@cname',
-            gender: query.gender ? query.gender : '@integer(1, 2)',
-            user: {
-              detail: {
-                age: query.age ? query.age : '@integer(10,30)',
-              },
-            },
-            idCard: query.idCard ? query.idCard : '@id',
-            email: query.email ? query.email : '@email',
-            address: '@city(true)',
+            parentId: '@string(number,18)',
+            name: '@ctitle(5, 10)',
             createTime: '@date @time',
-            status:
-              query.status !== undefined ? query.status : '@integer(0, 1)',
-            'avatar|1': [
-              'https://i.imgtg.com/2023/01/16/QRBHS.jpg',
-              'https://i.imgtg.com/2023/01/16/QRqMK.jpg',
-              'https://i.imgtg.com/2023/01/16/QR57a.jpg',
-              'https://i.imgtg.com/2023/01/16/QRa0s.jpg',
-            ],
+            updateTime: '@date @time',
             'children|3': [
               {
                 id: '@string(number,18)',
-                username: query.username ? query.username : '@cname',
-                gender: query.gender ? query.gender : '@integer(1, 2)',
-                user: {
-                  detail: {
-                    age: query.age ? query.age : '@integer(10,30)',
-                  },
-                },
-                idCard: query.idCard ? query.idCard : '@id',
-                email: query.email ? query.email : '@email',
-                address: '@city(true)',
+                parentId: '@string(number,18)',
+                name: '@ctitle(5, 10)',
                 createTime: '@date @time',
-                status:
-                  query.status !== undefined ? query.status : '@integer(0, 1)',
-                'avatar|1': [
-                  'https://i.imgtg.com/2023/01/16/QRBHS.jpg',
-                  'https://i.imgtg.com/2023/01/16/QRqMK.jpg',
-                  'https://i.imgtg.com/2023/01/16/QR57a.jpg',
-                  'https://i.imgtg.com/2023/01/16/QRa0s.jpg',
-                ],
+                updateTime: '@date @time',
               },
             ],
           },
@@ -69,47 +39,17 @@ function getCategoryList(ctx) {
         'list|25': [
           {
             id: '@string(number,18)',
-            username: query.username ? query.username : '@cname',
-            gender: query.gender ? query.gender : '@integer(1, 2)',
-            user: {
-              detail: {
-                age: query.age ? query.age : '@integer(10,30)',
-              },
-            },
-            idCard: query.idCard ? query.idCard : '@id',
-            email: query.email ? query.email : '@email',
-            address: '@city(true)',
+            parentId: '@string(number,18)',
+            name: '@ctitle(5, 10)',
             createTime: '@date @time',
-            status:
-              query.status !== undefined ? query.status : '@integer(0, 1)',
-            'avatar|1': [
-              'https://i.imgtg.com/2023/01/16/QRBHS.jpg',
-              'https://i.imgtg.com/2023/01/16/QRqMK.jpg',
-              'https://i.imgtg.com/2023/01/16/QR57a.jpg',
-              'https://i.imgtg.com/2023/01/16/QRa0s.jpg',
-            ],
+            updateTime: '@date @time',
             'children|3': [
               {
                 id: '@string(number,18)',
-                username: query.username ? query.username : '@cname',
-                gender: query.gender ? query.gender : '@integer(1, 2)',
-                user: {
-                  detail: {
-                    age: query.age ? query.age : '@integer(10,30)',
-                  },
-                },
-                idCard: query.idCard ? query.idCard : '@id',
-                email: query.email ? query.email : '@email',
-                address: '@city(true)',
+                parentId: '@string(number,18)',
+                name: '@ctitle(5, 10)',
                 createTime: '@date @time',
-                status:
-                  query.status !== undefined ? query.status : '@integer(0, 1)',
-                'avatar|1': [
-                  'https://i.imgtg.com/2023/01/16/QRBHS.jpg',
-                  'https://i.imgtg.com/2023/01/16/QRqMK.jpg',
-                  'https://i.imgtg.com/2023/01/16/QR57a.jpg',
-                  'https://i.imgtg.com/2023/01/16/QRa0s.jpg',
-                ],
+                updateTime: '@date @time',
               },
             ],
           },
@@ -123,47 +63,17 @@ function getCategoryList(ctx) {
         'list|50': [
           {
             id: '@string(number,18)',
-            username: query.username ? query.username : '@cname',
-            gender: query.gender ? query.gender : '@integer(1, 2)',
-            user: {
-              detail: {
-                age: query.age ? query.age : '@integer(10,30)',
-              },
-            },
-            idCard: query.idCard ? query.idCard : '@id',
-            email: query.email ? query.email : '@email',
-            address: '@city(true)',
+            parentId: '@string(number,18)',
+            name: '@ctitle(5, 10)',
             createTime: '@date @time',
-            status:
-              query.status !== undefined ? query.status : '@integer(0, 1)',
-            'avatar|1': [
-              'https://i.imgtg.com/2023/01/16/QRBHS.jpg',
-              'https://i.imgtg.com/2023/01/16/QRqMK.jpg',
-              'https://i.imgtg.com/2023/01/16/QR57a.jpg',
-              'https://i.imgtg.com/2023/01/16/QRa0s.jpg',
-            ],
+            updateTime: '@date @time',
             'children|3': [
               {
                 id: '@string(number,18)',
-                username: query.username ? query.username : '@cname',
-                gender: query.gender ? query.gender : '@integer(1, 2)',
-                user: {
-                  detail: {
-                    age: query.age ? query.age : '@integer(10,30)',
-                  },
-                },
-                idCard: query.idCard ? query.idCard : '@id',
-                email: query.email ? query.email : '@email',
-                address: '@city(true)',
+                parentId: '@string(number,18)',
+                name: '@ctitle(5, 10)',
                 createTime: '@date @time',
-                status:
-                  query.status !== undefined ? query.status : '@integer(0, 1)',
-                'avatar|1': [
-                  'https://i.imgtg.com/2023/01/16/QRBHS.jpg',
-                  'https://i.imgtg.com/2023/01/16/QRqMK.jpg',
-                  'https://i.imgtg.com/2023/01/16/QR57a.jpg',
-                  'https://i.imgtg.com/2023/01/16/QRa0s.jpg',
-                ],
+                updateTime: '@date @time',
               },
             ],
           },
@@ -177,47 +87,17 @@ function getCategoryList(ctx) {
         'list|100': [
           {
             id: '@string(number,18)',
-            username: query.username ? query.username : '@cname',
-            gender: query.gender ? query.gender : '@integer(1, 2)',
-            user: {
-              detail: {
-                age: query.age ? query.age : '@integer(10,30)',
-              },
-            },
-            idCard: query.idCard ? query.idCard : '@id',
-            email: query.email ? query.email : '@email',
-            address: '@city(true)',
+            parentId: '@string(number,18)',
+            name: '@ctitle(5, 10)',
             createTime: '@date @time',
-            status:
-              query.status !== undefined ? query.status : '@integer(0, 1)',
-            'avatar|1': [
-              'https://i.imgtg.com/2023/01/16/QRBHS.jpg',
-              'https://i.imgtg.com/2023/01/16/QRqMK.jpg',
-              'https://i.imgtg.com/2023/01/16/QR57a.jpg',
-              'https://i.imgtg.com/2023/01/16/QRa0s.jpg',
-            ],
+            updateTime: '@date @time',
             'children|3': [
               {
                 id: '@string(number,18)',
-                username: query.username ? query.username : '@cname',
-                gender: query.gender ? query.gender : '@integer(1, 2)',
-                user: {
-                  detail: {
-                    age: query.age ? query.age : '@integer(10,30)',
-                  },
-                },
-                idCard: query.idCard ? query.idCard : '@id',
-                email: query.email ? query.email : '@email',
-                address: '@city(true)',
+                parentId: '@string(number,18)',
+                name: '@ctitle(5, 10)',
                 createTime: '@date @time',
-                status:
-                  query.status !== undefined ? query.status : '@integer(0, 1)',
-                'avatar|1': [
-                  'https://i.imgtg.com/2023/01/16/QRBHS.jpg',
-                  'https://i.imgtg.com/2023/01/16/QRqMK.jpg',
-                  'https://i.imgtg.com/2023/01/16/QR57a.jpg',
-                  'https://i.imgtg.com/2023/01/16/QRa0s.jpg',
-                ],
+                updateTime: '@date @time',
               },
             ],
           },
@@ -231,47 +111,17 @@ function getCategoryList(ctx) {
         'list|10': [
           {
             id: '@string(number,18)',
-            username: query.username ? query.username : '@cname',
-            gender: query.gender ? query.gender : '@integer(1, 2)',
-            user: {
-              detail: {
-                age: query.age ? query.age : '@integer(10,30)',
-              },
-            },
-            idCard: query.idCard ? query.idCard : '@id',
-            email: query.email ? query.email : '@email',
-            address: '@city(true)',
+            parentId: '@string(number,18)',
+            name: '@ctitle(5, 10)',
             createTime: '@date @time',
-            status:
-              query.status !== undefined ? query.status : '@integer(0, 1)',
-            'avatar|1': [
-              'https://i.imgtg.com/2023/01/16/QRBHS.jpg',
-              'https://i.imgtg.com/2023/01/16/QRqMK.jpg',
-              'https://i.imgtg.com/2023/01/16/QR57a.jpg',
-              'https://i.imgtg.com/2023/01/16/QRa0s.jpg',
-            ],
+            updateTime: '@date @time',
             'children|3': [
               {
                 id: '@string(number,18)',
-                username: query.username ? query.username : '@cname',
-                gender: query.gender ? query.gender : '@integer(1, 2)',
-                user: {
-                  detail: {
-                    age: query.age ? query.age : '@integer(10,30)',
-                  },
-                },
-                idCard: query.idCard ? query.idCard : '@id',
-                email: query.email ? query.email : '@email',
-                address: '@city(true)',
+                parentId: '@string(number,18)',
+                name: '@ctitle(5, 10)',
                 createTime: '@date @time',
-                status:
-                  query.status !== undefined ? query.status : '@integer(0, 1)',
-                'avatar|1': [
-                  'https://i.imgtg.com/2023/01/16/QRBHS.jpg',
-                  'https://i.imgtg.com/2023/01/16/QRqMK.jpg',
-                  'https://i.imgtg.com/2023/01/16/QR57a.jpg',
-                  'https://i.imgtg.com/2023/01/16/QRa0s.jpg',
-                ],
+                updateTime: '@date @time',
               },
             ],
           },
@@ -282,6 +132,16 @@ function getCategoryList(ctx) {
       });
     }
   })();
+}
+
+function getCategoryById(id) {
+  return Mock.mock({
+    id,
+    parentId: '@string(number,18)',
+    name: '@ctitle(5, 10)',
+    createTime: '@date @time',
+    updateTime: '@date @time',
+  });
 }
 
 function addCategory() {
@@ -298,6 +158,7 @@ function deleteCategory() {
 
 module.exports = {
   getCategoryList,
+  getCategoryById,
   addCategory,
   editCategory,
   deleteCategory,

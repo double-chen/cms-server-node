@@ -44,12 +44,14 @@ function getRouter() {
 
   // 文章分类
   router.post('/category/list', categoryController.getCategoryList);
+  router.get('/category/detail', categoryController.getCategoryById);
   router.post('/category/add', categoryController.addCategory);
   router.post('/category/edit', categoryController.editCategory);
   router.post('/category/delete', categoryController.deleteCategory);
 
   // 文章标签
   router.post('/tag/list', tagController.getTagList);
+  router.get('/tag/detail', tagController.getTagById);
   router.post('/tag/add', tagController.addTag);
   router.post('/tag/edit', tagController.editTag);
   router.post('/tag/delete', tagController.deleteTag);

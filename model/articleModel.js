@@ -112,7 +112,6 @@ async function getArticleById(id) {
   const params = [id];
 
   const result = await db.query(sql, params);
-  console.log('getArticleById:result', result);
 
   return result[0];
 }
