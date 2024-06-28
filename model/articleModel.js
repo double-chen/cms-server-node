@@ -103,6 +103,12 @@ async function getArticleList(resParams) {
   return await db.query(sql, params);
 }
 
+async function getArticleById(id) {
+  if (config.useMock) {
+    return articleMock.getArticleById(id);
+  }
+}
+
 async function addArticle(reqParams) {
   if (config.useMock) {
     return articleMock.addArticle(reqParams);
@@ -203,6 +209,7 @@ async function deleteArticle(id) {
 
 module.exports = {
   getArticleList,
+  getArticleById,
   addArticle,
   editArticle,
   deleteArticle,
