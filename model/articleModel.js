@@ -145,7 +145,7 @@ async function addArticle(reqParams) {
 }
 
 async function editArticle(reqParams) {
-  if (process.env.USE_MOCK) {
+  if (config.useMock) {
     return articleMock.editArticle(reqParams);
   }
 
@@ -193,7 +193,7 @@ async function editArticle(reqParams) {
 }
 
 async function deleteArticle(id) {
-  if (process.env.USE_MOCK) {
+  if (config.useMock) {
     return articleMock.deleteArticle(id);
   }
 

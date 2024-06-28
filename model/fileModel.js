@@ -1,13 +1,14 @@
 const fileMock = require('../mock/fileMock');
+const config = require('../config');
 
 async function uploadImg(ctx) {
-  if (process.env.USE_MOCK) {
+  if (config.useMock) {
     return fileMock.uploadImg(ctx);
   }
 }
 
 async function uploadVideo(ctx) {
-  if (process.env.USE_MOCK) {
+  if (config.useMock) {
     return fileMock.uploadVideo(ctx);
   }
 }
