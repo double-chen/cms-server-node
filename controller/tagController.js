@@ -13,18 +13,33 @@ class TagController {
   }
 
   async addTag(ctx) {
-    const result = await tagModel.addTag(ctx);
-    ctx.body = result;
+    const params = ctx.request.body;
+    const result = await tagModel.addTag(params);
+    if (result > 0) {
+      ctx.body = true;
+    } else {
+      ctx.throw(500, '创建标签失败');
+    }
   }
 
   async editTag(ctx) {
-    const result = await tagModel.editTag(ctx);
-    ctx.body = result;
+    const params = ctx.request.body;
+    const result = await tagModel.editTag(params);
+    if (result > 0) {
+      ctx.body = true;
+    } else {
+      ctx.throw(500, '创建标签失败');
+    }
   }
 
   async deleteTag(ctx) {
-    const result = await tagModel.deleteTag(ctx);
-    ctx.body = result;
+    const params = ctx.request.body;
+    const result = await tagModel.deleteTag(params.id);
+    if (result > 0) {
+      ctx.body = true;
+    } else {
+      ctx.throw(500, '创建标签失败');
+    }
   }
 }
 
