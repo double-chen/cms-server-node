@@ -13,17 +13,20 @@ class CategoryController {
   }
 
   async addCategory(ctx) {
-    const result = await categoryModel.addCategory(ctx);
+    const params = ctx.request.body;
+    const result = await categoryModel.addCategory(params);
     ctx.body = result;
   }
 
   async editCategory(ctx) {
-    const result = await categoryModel.editCategory(ctx);
+    const params = ctx.request.body;
+    const result = await categoryModel.editCategory(params);
     ctx.body = result;
   }
 
   async deleteCategory(ctx) {
-    const result = await categoryModel.deleteCategory(ctx);
+    const params = ctx.request.body;
+    const result = await categoryModel.deleteCategory(params.id);
     ctx.body = result;
   }
 }
