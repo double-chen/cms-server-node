@@ -37,6 +37,7 @@ function getRouter() {
 
   // 文章相关
   router.post('/article/list', articleController.getArticleList);
+  router.get('/article/detail', articleController.getArticleById);
   router.post('/article/add', articleController.addArticle);
   router.post('/article/edit', articleController.editArticle);
   router.post('/article/delete', articleController.deleteArticle);

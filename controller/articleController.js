@@ -7,6 +7,12 @@ class ArticleController {
     ctx.body = result;
   }
 
+  async getArticleById(ctx) {
+    const params = ctx.query;
+    const result = await articleModel.getArticleById(params.id);
+    ctx.body = result;
+  }
+
   async addArticle(ctx) {
     const params = ctx.request.body;
     const result = await articleModel.addArticle(params);
@@ -18,7 +24,8 @@ class ArticleController {
   }
 
   async editArticle(ctx) {
-    const result = await articleModel.editArticle(ctx);
+    const params = ctx.request.body;
+    const result = await articleModel.editArticle(params);
     if (result > 0) {
       ctx.body = true;
     } else {
@@ -27,7 +34,8 @@ class ArticleController {
   }
 
   async deleteArticle(ctx) {
-    const result = await articleModel.deleteArticle(ctx);
+    const params = ctx.request.body;
+    const result = await articleModel.deleteArticle(params.id);
     if (result > 0) {
       ctx.body = true;
     } else {

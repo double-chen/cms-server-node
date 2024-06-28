@@ -107,6 +107,14 @@ async function getArticleById(id) {
   if (config.useMock) {
     return articleMock.getArticleById(id);
   }
+
+  const sql = `SELECT title,content,summary,categoryId,tagIds,thumbnail,isPublish FROM Article WHERE id = ?`;
+  const params = [id];
+
+  const result = await db.query(sql, params);
+  console.log('getArticleById:result', result);
+
+  return result[0];
 }
 
 async function addArticle(reqParams) {
