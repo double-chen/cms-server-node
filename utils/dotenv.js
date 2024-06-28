@@ -1,6 +1,6 @@
 const path = require('path');
 
-function initDotenv() {
+function config() {
   const envs = {
     development: '.env.dev',
     pre: '.env.pre',
@@ -11,4 +11,6 @@ function initDotenv() {
   });
 }
 
-module.exports = initDotenv;
+module.exports = {
+  config,
+};

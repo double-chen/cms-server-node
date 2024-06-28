@@ -2,12 +2,14 @@ const articleModel = require('../model/articleModel');
 
 class ArticleController {
   async getArticleList(ctx) {
-    const result = await articleModel.getArticleList(ctx);
+    const params = ctx.request.body;
+    const result = await articleModel.getArticleList(params);
     ctx.body = result;
   }
 
   async addArticle(ctx) {
-    const result = await articleModel.addArticle(ctx);
+    const params = ctx.request.body;
+    const result = await articleModel.addArticle(params);
     ctx.body = result;
   }
 

@@ -1,7 +1,7 @@
 const Mock = require('mockjs');
 
-function getArticleList(ctx) {
-  const query = ctx.request.body;
+function getArticleList(params) {
+  const query = params;
   return {
     code: 200,
     data: (function () {

@@ -1,14 +1,11 @@
 const Koa = require('koa');
 const cors = require('@koa/cors');
 const { bodyParser } = require('@koa/bodyparser');
+require('./utils/dotenv').config();
 
 const getRouter = require('./router');
 const notFound = require('./middleware/404');
 const compress = require('./middleware/compress');
-
-const initDotenv = require('./utils/dotenv');
-
-initDotenv();
 
 function start({ port, host } = {}) {
   const app = new Koa();
