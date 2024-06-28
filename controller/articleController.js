@@ -10,8 +10,8 @@ class ArticleController {
   async addArticle(ctx) {
     const params = ctx.request.body;
     const result = await articleModel.addArticle(params);
-    if (result.affectedRows > 0) {
-      ctx.body = { insertId: result.insertId };
+    if (result > 0) {
+      ctx.body = true;
     } else {
       ctx.throw(500, '创建文章失败');
     }
@@ -19,12 +19,20 @@ class ArticleController {
 
   async editArticle(ctx) {
     const result = await articleModel.editArticle(ctx);
-    ctx.body = result;
+    if (result > 0) {
+      ctx.body = true;
+    } else {
+      ctx.throw(500, '编辑文章失败');
+    }
   }
 
   async deleteArticle(ctx) {
     const result = await articleModel.deleteArticle(ctx);
-    ctx.body = result;
+    if (result > 0) {
+      ctx.body = true;
+    } else {
+      ctx.throw(500, '删除文章失败');
+    }
   }
 }
 

@@ -141,7 +141,7 @@ async function addArticle(reqParams) {
     updateTime,
   ];
   const result = await db.query(sql, params);
-  return result;
+  return result.affectedRows;
 }
 
 async function editArticle(reqParams) {
@@ -158,9 +158,9 @@ async function editArticle(reqParams) {
     tagIds,
     thumbnail,
     isPublish,
-    createTime,
-    updateTime,
   } = reqParams;
+
+  const updateTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
 
   const sql = `
   UPDATE Article
@@ -171,8 +171,7 @@ async function editArticle(reqParams) {
       categoryId = ?, 
       tagIds = ?, 
       thumbnail = ?, 
-      isPublish = ?, 
-      createTime = ?, 
+      isPublish = ?,  
       updateTime = ?
   WHERE id = ?;
 `;
@@ -184,7 +183,6 @@ async function editArticle(reqParams) {
     JSON.stringify(tagIds),
     thumbnail,
     isPublish,
-    createTime,
     updateTime,
     id,
   ];
