@@ -34,6 +34,11 @@ function getRouter() {
   // 文件相关
   router.post('/file/upload/img', fileController.uploadImg);
   router.post('/file/upload/video', fileController.uploadVideo);
+  router.post(
+    '/file/uploadFile',
+    fileController.uploadFile,
+    fileController.uploadFileCallback
+  );
 
   // 文章相关
   router.post('/article/list', articleController.getArticleList);

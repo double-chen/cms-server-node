@@ -1,5 +1,22 @@
+const multer = require('@koa/multer');
 const fileMock = require('../mock/fileMock');
 const config = require('../config');
+
+// 配置 multer 存储
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, path.join(__dirname, '/uploads')); // 上传目录
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(
+      null,
+      file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname)
+    );
+  },
+});
+
+const upload = multer({ storage: storage });
 
 async function uploadImg(ctx) {
   if (config.useMock) {
@@ -13,7 +30,10 @@ async function uploadVideo(ctx) {
   }
 }
 
+const uploadFile = upload.single('file');
+
 module.exports = {
   uploadImg,
   uploadVideo,
+  uploadFile,
 };
