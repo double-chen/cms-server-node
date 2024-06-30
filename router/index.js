@@ -7,29 +7,72 @@ const fileController = require('../controller/fileController');
 const tagController = require('../controller/tagController');
 const userController = require('../controller/userController');
 
+const authenticate = require('../middleware/authenticate');
+
 function getRouter() {
   const router = new KoaRouter({ prefix });
 
   // 权限相关
-  router.get('/menu/list', authController.getMenuList);
-  router.get('/auth/buttons', authController.getAuthButtons);
+  router.get('/menu/list', authenticate, authController.getMenuList);
+  router.get('/auth/buttons', authenticate, authController.getAuthButtons);
 
   // 用户相关
   router.post('/login', userController.login);
   router.post('/logout', userController.logout);
-  router.get('/user/gender', userController.getUserGender);
-  router.get('/user/status', userController.getUserStatus);
-  router.get('/user/department', userController.getUserDepartment);
-  router.post('/user/list', userController.getUserList);
-  router.post('/user/rest_password', userController.resetUserPassword);
-  router.post('/user/delete', userController.deleteUser);
-  router.post('/user/add', userController.addUser);
-  router.post('/user/edit', userController.editUser);
-  router.post('/user/export', userController.exportUser);
-  router.post('/user/import', userController.importUser);
-  router.get('/user/role', userController.getRoleList);
-  router.get('/user/tree/list', userController.getUserTreeList);
-  router.post('/user/change', userController.changeUser);
+  router.get('/user/gender', authenticate, userController.getUserGender);
+  router.get('/user/status', authenticate, userController.getUserStatus);
+  router.get(
+    '/user/department',
+    authenticate,
+    userController.getUserDepartment
+  );
+  router.post('/user/list', authenticate, userController.getUserList);
+  router.post(
+    '/user/rest_password',
+    authenticate,
+    userController.resetUserPassword
+  );
+  router.post('/user/delete', authenticate, userController.deleteUser);
+  router.post('/user/add', authenticate, userController.addUser);
+  router.post('/user/edit', authenticate, userController.editUser);
+  router.post('/user/export', authenticate, userController.exportUser);
+  router.post('/user/import', authenticate, userController.importUser);
+  router.get('/user/role', authenticate, userController.getRoleList);
+  router.get('/user/tree/list', authenticate, userController.getUserTreeList);
+  router.post('/user/change', authenticate, userController.changeUser);
+
+  // 文章相关
+  router.post('/article/list', authenticate, articleController.getArticleList);
+  router.get('/article/detail', authenticate, articleController.getArticleById);
+  router.post('/article/add', authenticate, articleController.addArticle);
+  router.post('/article/edit', authenticate, articleController.editArticle);
+  router.post('/article/delete', authenticate, articleController.deleteArticle);
+
+  // 文章分类
+  router.post(
+    '/category/list',
+    authenticate,
+    categoryController.getCategoryList
+  );
+  router.get(
+    '/category/detail',
+    authenticate,
+    categoryController.getCategoryById
+  );
+  router.post('/category/add', authenticate, categoryController.addCategory);
+  router.post('/category/edit', authenticate, categoryController.editCategory);
+  router.post(
+    '/category/delete',
+    authenticate,
+    categoryController.deleteCategory
+  );
+
+  // 文章标签
+  router.post('/tag/list', authenticate, tagController.getTagList);
+  router.get('/tag/detail', authenticate, tagController.getTagById);
+  router.post('/tag/add', authenticate, tagController.addTag);
+  router.post('/tag/edit', authenticate, tagController.editTag);
+  router.post('/tag/delete', authenticate, tagController.deleteTag);
 
   // 文件相关
   router.post('/file/upload/img', fileController.uploadImg);
@@ -39,27 +82,6 @@ function getRouter() {
     fileController.uploadFile,
     fileController.uploadFileCallback
   );
-
-  // 文章相关
-  router.post('/article/list', articleController.getArticleList);
-  router.get('/article/detail', articleController.getArticleById);
-  router.post('/article/add', articleController.addArticle);
-  router.post('/article/edit', articleController.editArticle);
-  router.post('/article/delete', articleController.deleteArticle);
-
-  // 文章分类
-  router.post('/category/list', categoryController.getCategoryList);
-  router.get('/category/detail', categoryController.getCategoryById);
-  router.post('/category/add', categoryController.addCategory);
-  router.post('/category/edit', categoryController.editCategory);
-  router.post('/category/delete', categoryController.deleteCategory);
-
-  // 文章标签
-  router.post('/tag/list', tagController.getTagList);
-  router.get('/tag/detail', tagController.getTagById);
-  router.post('/tag/add', tagController.addTag);
-  router.post('/tag/edit', tagController.editTag);
-  router.post('/tag/delete', tagController.deleteTag);
 
   return router.routes();
 }

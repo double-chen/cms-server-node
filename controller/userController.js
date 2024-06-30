@@ -1,9 +1,24 @@
+const jwt = require('jsonwebtoken');
 const userModel = require('../model/userModel');
+const config = require('../config');
 
 class UserController {
   async login(ctx) {
-    const result = await userModel.login(ctx);
-    ctx.body = result;
+    const params = ctx.request.body;
+    const result = await userModel.validateUser(
+      params.username,
+      params.password
+    );
+    if (result) {
+      console.log('login: result', result);
+      const token = jwt.sign({ username: result.username }, config.SECRET_KEY, {
+        expiresIn: '90d',
+      }); // 设置有效期为 3 个月
+
+      ctx.body = { user: result, access_token: token };
+    } else {
+      ctx.throw(401, '用户名或密码无效');
+    }
   }
 
   async logout(ctx) {

@@ -1,5 +1,7 @@
+const dayjs = require('dayjs');
 const userMock = require('../mock/userMock');
 const config = require('../config');
+const db = require('../utils/db');
 
 async function login(ctx) {
   if (config.useMock) {
@@ -37,10 +39,58 @@ async function getUserDepartment(ctx) {
   }
 }
 
-async function addUser(ctx) {
+async function addUser(reqParams) {
   if (config.useMock) {
-    return userMock.addUser(ctx);
+    return userMock.addUser(reqParams);
   }
+
+  const {
+    userId,
+    username,
+    gender,
+    age,
+    idCard,
+    email,
+    address,
+    createTime,
+    status,
+    avatar,
+    roleId,
+    password,
+  } = reqParams;
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const sql = `INSERT INTO Users (
+    userId,
+    username,
+    gender,
+    age,
+    idCard,
+    email,
+    address,
+    createTime,
+    status,
+    avatar,
+    roleId,
+    password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+  const params = [
+    userId,
+    username,
+    gender,
+    age,
+    idCard,
+    email,
+    address,
+    createTime,
+    status,
+    avatar,
+    roleId,
+    hashedPassword,
+  ];
+
+  const result = await db.query(sql, params);
+  return { userId: result.insertId, userName, email };
 }
 
 async function editUser(ctx) {
@@ -91,6 +141,28 @@ async function changeUser(ctx) {
   }
 }
 
+// 查找用户
+async function findUserByUserName(userName) {
+  const sql =
+    'SELECT userId,username,gender,age,idCard,email,address,createTime,status,avatar,roleId FROM Users WHERE username = ?';
+
+  const params = [userName];
+  const result = await db.query(sql, params);
+
+  return result[0];
+}
+
+// 验证用户凭证
+async function validateUser(userName, password) {
+  const user = await findUserByUserName(userName);
+  if (!user) return null;
+
+  const isValid = await bcrypt.compare(password, user.password);
+  if (!isValid) return null;
+
+  return user;
+}
+
 module.exports = {
   login,
   logout,
@@ -107,4 +179,6 @@ module.exports = {
   getRoleList,
   getUserTreeList,
   changeUser,
+  findUserByUserName,
+  validateUser,
 };
