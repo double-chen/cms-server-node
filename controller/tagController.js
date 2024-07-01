@@ -2,7 +2,7 @@ const tagModel = require('../model/tagModel');
 
 class TagController {
   async getTagList(ctx) {
-    const result = await tagModel.getTagList(ctx);
+    const result = await tagModel.getTagList();
     ctx.body = result;
   }
 

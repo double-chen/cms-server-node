@@ -4,9 +4,9 @@ const config = require('../config');
 const { v4: uuidv4 } = require('uuid');
 const db = require('../utils/db');
 
-async function getTagList(ctx) {
+async function getTagList() {
   if (config.useMock) {
-    return tagMock.getTagList(ctx);
+    return tagMock.getTagList();
   }
 
   const sql = `SELECT id,name FROM Tag`;

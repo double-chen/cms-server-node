@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
 const userModel = require('../model/userModel');
 const config = require('../config');
 
@@ -22,57 +23,76 @@ class UserController {
 
   // 登出不需要调用接口，在前端清除token即可。
   async logout(ctx) {
-    const result = await userModel.logout(ctx);
+    const result = await userModel.logout();
     ctx.body = result;
   }
 
   async getUserGender(ctx) {
-    const result = await userModel.getUserGender(ctx);
+    const result = await userModel.getUserGender();
     ctx.body = result;
   }
 
   async getUserStatus(ctx) {
-    const result = await userModel.getUserStatus(ctx);
+    const result = await userModel.getUserStatus();
     ctx.body = result;
   }
 
   async getUserList(ctx) {
-    const result = await userModel.getUserList(ctx);
+    const params = ctx.request.body;
+    const result = await userModel.getUserList(params);
     ctx.body = result;
   }
 
   async getUserDepartment(ctx) {
-    const result = await userModel.getUserDepartment(ctx);
+    const result = await userModel.getUserDepartment();
     ctx.body = result;
   }
 
   async addUser(ctx) {
-    const result = await userModel.addUser(ctx);
+    const params = ctx.request.body;
+    const result = await userModel.addUser(params);
     ctx.body = result;
   }
 
   async editUser(ctx) {
-    const result = await userModel.editUser(ctx);
+    const params = ctx.request.body;
+    const result = await userModel.editUser(params);
     ctx.body = result;
   }
 
   async deleteUser(ctx) {
-    const result = await userModel.deleteUser(ctx);
+    const params = ctx.request.body;
+    const result = await userModel.deleteUser(params.id);
     ctx.body = result;
   }
 
   async resetUserPassword(ctx) {
-    const result = await userModel.resetUserPassword(ctx);
+    const params = ctx.request.body;
+    const result = await userModel.resetUserPassword(
+      params.userId,
+      params.password
+    );
     ctx.body = result;
   }
 
   async exportUser(ctx) {
-    const result = await userModel.exportUser(ctx);
-    ctx.body = result;
+    const params = ctx.request.body;
+    const { filePath, fileName, callback } = await userModel.exportUser(params);
+
+    // 设置响应头以便下载文件
+    ctx.set('Content-disposition', `attachment; filename=${fileName}`);
+    ctx.set(
+      'Content-type',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    );
+    ctx.body = fs.createReadStream(filePath);
+
+    // 删除临时文件
+    ctx.res.on('finish', callback);
   }
 
   async importUser(ctx) {
-    const result = await userModel.importUser(ctx);
+    const result = await userModel.importUser(ctx.file);
     ctx.body = result;
   }
 

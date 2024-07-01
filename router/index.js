@@ -36,7 +36,12 @@ function getRouter() {
   router.post('/user/add', authenticate, userController.addUser);
   router.post('/user/edit', authenticate, userController.editUser);
   router.post('/user/export', authenticate, userController.exportUser);
-  router.post('/user/import', authenticate, userController.importUser);
+  router.post(
+    '/user/import',
+    authenticate,
+    fileController.uploadFile,
+    userController.importUser
+  );
   router.get('/user/role', authenticate, userController.getRoleList);
   router.get('/user/tree/list', authenticate, userController.getUserTreeList);
   router.post('/user/change', authenticate, userController.changeUser);
