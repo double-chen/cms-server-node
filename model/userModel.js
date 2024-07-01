@@ -1,4 +1,5 @@
 const dayjs = require('dayjs');
+const bcrypt = require('bcrypt');
 const userMock = require('../mock/userMock');
 const config = require('../config');
 const db = require('../utils/db');
@@ -19,6 +20,17 @@ async function getUserGender(ctx) {
   if (config.useMock) {
     return userMock.getUserGender(ctx);
   }
+
+  return [
+    {
+      genderLabel: '男',
+      genderValue: 1,
+    },
+    {
+      genderLabel: '女',
+      genderValue: 2,
+    },
+  ];
 }
 
 async function getUserStatus(ctx) {
@@ -144,7 +156,7 @@ async function changeUser(ctx) {
 // 查找用户
 async function findUserByUserName(userName) {
   const sql =
-    'SELECT userId,username,gender,age,idCard,email,address,createTime,status,avatar,roleId FROM Users WHERE username = ?';
+    'SELECT userId,username,gender,age,idCard,email,address,createTime,status,avatar,roleId,password FROM Users WHERE username = ?';
 
   const params = [userName];
   const result = await db.query(sql, params);

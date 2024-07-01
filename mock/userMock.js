@@ -3,17 +3,11 @@ const Mock = require('mockjs');
 function login(ctx) {
   const { body } = ctx.request;
 
-  if (
-    body.username === 'admin' &&
-    body.password === 'e10adc3949ba59abbe56e057f20f883e'
-  )
+  if (body.username === 'admin' && body.password === '123456')
     return Mock.mock({
       access_token: 'bqddxxwqmfncffacvbpkuxvwvqrhln',
     });
-  if (
-    body.username === 'user' &&
-    body.password === 'e10adc3949ba59abbe56e057f20f883e'
-  )
+  if (body.username === 'user' && body.password === '123456')
     return Mock.mock({
       access_token: 'unufvdotdqxuzfbdygovfmsbftlvbn',
     });
