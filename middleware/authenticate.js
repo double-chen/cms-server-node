@@ -2,6 +2,11 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 
 async function authenticate(ctx, next) {
+  if (config.useMock) {
+    await next();
+    return;
+  }
+
   const token = ctx.headers['x-access-token'];
 
   if (token) {
