@@ -9,7 +9,7 @@ ARCHIVE_NAME="cms.tar.gz"        # 压缩文件名
 
 # 压缩文件
 echo "压缩文件..."
-tar -czvf $ARCHIVE_NAME -C $LOCAL_APP_PATH .
+tar --exclude="node_modules" --exclude="package-lock.json" -czvf $ARCHIVE_NAME -C $LOCAL_APP_PATH .
 
 # 上传文件
 echo "上传文件..."
@@ -21,6 +21,7 @@ ssh $REMOTE_USER@$REMOTE_HOST << EOF
   cd $REMOTE_PATH
   tar -xzvf $ARCHIVE_NAME
   rm $ARCHIVE_NAME
+  npm install --registry=https://registry.npmmirror.com
   pm2 startOrRestart ecosystem.config.js
 EOF
 

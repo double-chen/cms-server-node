@@ -167,12 +167,13 @@ async function getUserList(resParams) {
        status,
        avatar,
        roleId
+    FROM Users
    ${conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : ''}
     ORDER BY createTime DESC
     LIMIT ${pageSize} OFFSET ${offset};
-    FROM Users`;
+  `;
 
-  console.log('getUserList: sql');
+  console.log('getUserList: sql', sql);
   const result = await db.query(sql, params);
 
   return result;
