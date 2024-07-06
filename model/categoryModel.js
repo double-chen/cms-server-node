@@ -80,7 +80,7 @@ async function editCategory(reqParams) {
 
   const sql = `UPDATE Category SET name = ?, parentId = ?, updateTime = ? WHERE id = ?`;
   const params = [name, parentId, updateTime, id];
-  const result = await query(sql, params);
+  const result = await db.query(sql, params);
   return result.affectedRows;
 }
 
@@ -91,7 +91,7 @@ async function deleteCategory(id) {
 
   const sql = `DELETE FROM Category WHERE id = ?;`;
   const params = [id];
-  const result = await query(sql, params);
+  const result = await db.query(sql, params);
   return result.affectedRows;
 }
 
