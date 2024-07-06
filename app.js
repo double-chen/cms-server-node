@@ -12,6 +12,10 @@ function start({ port, host } = {}) {
   const app = new Koa();
   const router = getRouter();
   app
+    // .use(async (ctx, next) => {
+    //   console.log(`Request received: ${ctx.method} ${ctx.url}`);
+    //   await next(); // 继续处理请求
+    // })
     .use(bodyParser())
     .use(
       cors({
