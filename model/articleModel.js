@@ -69,19 +69,18 @@ async function getArticleList(resParams) {
   }
 
   const sql = `SELECT 
-    a.id AS articleId,
-    a.title AS articleTitle,
-    a.content AS articleContent,
-    a.summary AS articleSummary,
-    a.thumbnail AS articleThumbnail,
-    a.isPublish AS articleIsPublish,
-    a.createTime AS articleCreateTime,
-    a.updateTime AS articleUpdateTime,
+    a.id,
+    a.title,
+    a.content,
+    a.summary,
+    a.thumbnail,
+    a.isPublish,
+    a.createTime,
+    a.updateTime,
     c.id AS categoryId,
     c.name AS categoryName,
     c.parentId AS categoryParentId,
-    c.createTime AS categoryCreateTime,
-    c.updateTime AS categoryUpdateTime,
+    GROUP_CONCAT(t.id) AS tagIds,
     GROUP_CONCAT(t.name) AS tagNames
     FROM 
         Article a
@@ -100,7 +99,29 @@ async function getArticleList(resParams) {
     ORDER BY a.createTime DESC
     LIMIT ${pageSize} OFFSET ${offset};`;
 
-  return await db.query(sql, params);
+  const result = await db.query(sql, params);
+
+  // 查询总记录数
+  const [countResult] = await db.query(
+    `SELECT COUNT(*) as total FROM Article a
+     ${conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : ''}`,
+    params
+  );
+
+  const list = result.map((n) => {
+    return {
+      ...n,
+      tagIds: n.tagIds ? n.tagIds.split(',') : [],
+      tagNames: n.tagIds ? n.tagNames.split(',') : [],
+    };
+  });
+
+  return {
+    list,
+    pageNum,
+    pageSize,
+    total: countResult.total,
+  };
 }
 
 async function getArticleById(id) {
