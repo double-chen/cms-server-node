@@ -10,14 +10,9 @@ async function authenticate(ctx, next) {
   const token = ctx.headers['x-access-token'];
 
   if (token) {
-    try {
-      const user = jwt.verify(token, config.SECRET_KEY);
-      ctx.state.user = user;
-      await next();
-    } catch (err) {
-      ctx.status = 403;
-      ctx.body = { message: 'Forbidden' };
-    }
+    const user = jwt.verify(token, config.SECRET_KEY);
+    ctx.state.user = user;
+    await next();
   } else {
     ctx.status = 401;
     ctx.body = { message: 'Unauthorized' };

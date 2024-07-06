@@ -1,5 +1,10 @@
 const jwt = require('jsonwebtoken');
 const fs = require('fs');
+const {
+  validateCreateUser,
+  validateUpdateUser,
+  validateDeleteUser,
+} = require('../validators/userValidator');
 const userModel = require('../model/userModel');
 const config = require('../config');
 
@@ -11,9 +16,13 @@ class UserController {
       params.password
     );
     if (result) {
-      const token = jwt.sign({ username: result.username }, config.SECRET_KEY, {
-        expiresIn: '90d',
-      }); // 设置有效期为 3 个月
+      const token = jwt.sign(
+        { username: result.username, roleId: result.roleId },
+        config.SECRET_KEY,
+        {
+          expiresIn: '90d',
+        }
+      ); // 设置有效期为 3 个月
 
       ctx.body = { access_token: token };
     } else {
@@ -50,19 +59,43 @@ class UserController {
 
   async addUser(ctx) {
     const params = ctx.request.body;
+
+    const { error } = validateCreateUser(params);
+
+    if (error) {
+      ctx.throw(400, { message: error.details[0].message });
+      return;
+    }
+
     const result = await userModel.addUser(params);
     ctx.body = result;
   }
 
   async editUser(ctx) {
     const params = ctx.request.body;
+
+    const { error } = validateUpdateUser(params);
+
+    if (error) {
+      ctx.throw(400, { message: error.details[0].message });
+      return;
+    }
+
     const result = await userModel.editUser(params);
     ctx.body = result;
   }
 
   async deleteUser(ctx) {
     const params = ctx.request.body;
-    const result = await userModel.deleteUser(params.id);
+
+    const { error } = validateDeleteUser(params);
+
+    if (error) {
+      ctx.throw(400, { message: error.details[0].message });
+      return;
+    }
+
+    const result = await userModel.deleteUser(params.userId);
     ctx.body = result;
   }
 

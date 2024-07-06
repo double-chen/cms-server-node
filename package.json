@@ -28,6 +28,7 @@
     "cross-env": "^7.0.3",
     "dayjs": "^1.11.11",
     "dotenv": "^16.4.5",
+    "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "koa": "^2.15.3",
     "koa-compress": "^5.1.1",

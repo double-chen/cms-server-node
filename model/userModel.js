@@ -173,7 +173,6 @@ async function getUserList(resParams) {
     LIMIT ${pageSize} OFFSET ${offset};
   `;
 
-  console.log('getUserList: sql', sql);
   const result = await db.query(sql, params);
 
   return result;
@@ -185,7 +184,6 @@ async function addUser(reqParams) {
   }
 
   const {
-    userId,
     username,
     gender,
     age,
@@ -201,8 +199,7 @@ async function addUser(reqParams) {
   const hashedPassword = await bcrypt.hash(password, 10);
   const createTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
 
-  const sql = `INSERT INTO Users (
-    userId,
+  const sql = `INSERT INTO Users ( 
     username,
     gender,
     age,
@@ -213,9 +210,8 @@ async function addUser(reqParams) {
     status,
     avatar,
     roleId,
-    password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+    password) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
   const params = [
-    userId,
     username,
     gender,
     age,
@@ -260,8 +256,8 @@ async function editUser(reqParams) {
       idCard = ?, 
       email = ?, 
       address = ?,  
-      status = ?
-      avatar = ?
+      status = ?, 
+      avatar = ?, 
       roleId = ?
   WHERE userId = ?;
 `;
@@ -277,7 +273,7 @@ async function editUser(reqParams) {
     roleId,
     userId,
   ];
-  const result = await query(sql, params);
+  const result = await db.query(sql, params);
   return result.affectedRows;
 }
 
@@ -288,7 +284,7 @@ async function deleteUser(userId) {
 
   const sql = `DELETE FROM Users WHERE userId = ?;`;
   const params = [userId];
-  const result = await query(sql, params);
+  const result = await db.query(sql, params);
   return result.affectedRows;
 }
 
@@ -297,13 +293,15 @@ async function resetUserPassword(userId, password) {
     return userMock.resetUserPassword(userId, password);
   }
 
+  const hashedPassword = await bcrypt.hash(password, 10);
+
   const sql = `
     UPDATE Users
     SET 
         password = ?
     WHERE userId = ?;`;
-  const params = [password, userId];
-  const result = await query(sql, params);
+  const params = [hashedPassword, userId];
+  const result = await db.query(sql, params);
   return result.affectedRows;
 }
 
@@ -442,11 +440,11 @@ async function getRoleList(resParams) {
   const sql = `SELECT roleId,
        roleName,
        description 
+    FROM Roles
    ${conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : ''}
     LIMIT ${pageSize} OFFSET ${offset};
-    FROM Roles`;
+   `;
 
-  console.log('getRoleList: sql');
   const result = await db.query(sql, params);
 
   return result;

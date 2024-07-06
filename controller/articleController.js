@@ -19,7 +19,7 @@ class ArticleController {
     if (result > 0) {
       ctx.body = true;
     } else {
-      ctx.throw(500, '创建文章失败');
+      ctx.throw(500, { message: '创建文章失败' });
     }
   }
 
@@ -29,7 +29,7 @@ class ArticleController {
     if (result > 0) {
       ctx.body = true;
     } else {
-      ctx.throw(500, '编辑文章失败');
+      ctx.throw(500, { message: '编辑文章失败' });
     }
   }
 
@@ -39,7 +39,7 @@ class ArticleController {
     if (result > 0) {
       ctx.body = true;
     } else {
-      ctx.throw(500, '删除文章失败');
+      ctx.throw(500, { message: '删除文章失败' });
     }
   }
 }
