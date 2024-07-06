@@ -199,7 +199,7 @@ async function editArticle(reqParams) {
     updateTime,
     id,
   ];
-  const result = await query(sql, params);
+  const result = await db.query(sql, params);
   return result.affectedRows;
 }
 
@@ -210,7 +210,7 @@ async function deleteArticle(id) {
 
   const sql = `DELETE FROM Article WHERE id = ?;`;
   const params = [id];
-  const result = await query(sql, params);
+  const result = await db.query(sql, params);
   return result.affectedRows;
 }
 
