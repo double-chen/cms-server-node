@@ -42,9 +42,9 @@ async function addTag(reqParams) {
   return result.affectedRows;
 }
 
-async function editTag(ctx) {
+async function editTag(reqParams) {
   if (config.useMock) {
-    return tagMock.editTag(ctx);
+    return tagMock.editTag(reqParams);
   }
 
   const { id, name } = reqParams;
@@ -52,7 +52,7 @@ async function editTag(ctx) {
 
   const sql = `UPDATE Tag SET name = ?, updateTime = ? WHERE id = ?`;
   const params = [name, updateTime, id];
-  const result = await query(sql, params);
+  const result = await db.query(sql, params);
   return result.affectedRows;
 }
 
@@ -63,7 +63,7 @@ async function deleteTag(id) {
 
   const sql = `DELETE FROM Tag WHERE id = ?;`;
   const params = [id];
-  const result = await query(sql, params);
+  const result = await db.query(sql, params);
   return result.affectedRows;
 }
 
