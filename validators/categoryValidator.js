@@ -9,6 +9,10 @@ const baseSchema = Joi.object({
   parentId: Joi.string().allow(null).messages({
     'string.empty': '父级ID不能为空',
   }),
+  createTime: Joi.optional(),
+  isInMenu: Joi.optional(),
+  updateTime: Joi.optional(),
+  children: Joi.optional(),
 });
 
 // 添加数据的验证规则（直接使用基础规则）
@@ -30,6 +34,10 @@ const idSchema = Joi.object({
   }),
 });
 
+const idsSchema = Joi.object({
+  ids: Joi.array().items(Joi.string().required()).required(),
+});
+
 const validateCreateCategory = (data) => {
   return addSchema.validate(data);
 };
@@ -42,8 +50,13 @@ const validateIdCategory = (data) => {
   return idSchema.validate(data);
 };
 
+const validateIdsCategory = (data) => {
+  return idsSchema.validate(data);
+};
+
 module.exports = {
   validateCreateCategory,
   validateUpdateCategory,
   validateIdCategory,
+  validateIdsCategory,
 };

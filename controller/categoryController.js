@@ -3,11 +3,13 @@ const {
   validateCreateCategory,
   validateUpdateCategory,
   validateIdCategory,
+  validateIdsCategory,
 } = require('../validators/categoryValidator');
 
 class CategoryController {
   async getCategoryList(ctx) {
-    const result = await categoryModel.getCategoryList(ctx);
+    const params = ctx.request.body;
+    const result = await categoryModel.getCategoryList(params.parentId);
     ctx.body = result;
   }
 
@@ -55,13 +57,13 @@ class CategoryController {
   async deleteCategory(ctx) {
     const params = ctx.request.body;
 
-    const { error } = validateIdCategory(params);
+    const { error } = validateIdsCategory(params);
 
     if (error) {
       ctx.throw(400, { message: error.details[0].message });
       return;
     }
-    const result = await categoryModel.deleteCategory(params.id);
+    const result = await categoryModel.deleteCategory(params.ids);
     ctx.body = result;
   }
 }

@@ -17,26 +17,36 @@ function buildCategoryTree(categories) {
 
   // 构建树结构
   categories.forEach((category) => {
-    if (category.parentId === null) {
+    if (
+      category.parentId === null ||
+      categoryMap.get(category.parentId) === undefined
+    ) {
       tree.push(category);
     } else {
       const parent = categoryMap.get(category.parentId);
-      if (parent) {
-        parent.children.push(category);
-      }
+      parent.children.push(category);
     }
   });
 
   return tree;
 }
 
-async function getCategoryList(ctx) {
+async function getCategoryList(parentId) {
   if (config.useMock) {
-    return categoryMock.getCategoryList(ctx);
+    return categoryMock.getCategoryList(parentId);
   }
 
-  const sql = `SELECT id,name,parentId,createTime,updateTime FROM Category`;
-  const sqlResult = await db.query(sql);
+  const conditions = [];
+  const params = [];
+  if (parentId !== undefined && parentId !== '-1') {
+    conditions.push('parentId = ?');
+    params.push(parentId);
+  }
+
+  const sql = `SELECT id,name,parentId,createTime,updateTime FROM Category
+   ${conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : ''}`;
+
+  const sqlResult = await db.query(sql, params);
   const result = buildCategoryTree(sqlResult);
 
   return result;
@@ -84,13 +94,15 @@ async function editCategory(reqParams) {
   return result.affectedRows;
 }
 
-async function deleteCategory(id) {
+async function deleteCategory(ids) {
   if (config.useMock) {
-    return categoryMock.deleteCategory(id);
+    return categoryMock.deleteCategory(ids);
   }
 
-  const sql = `DELETE FROM Category WHERE id = ?;`;
-  const params = [id];
+  const placeholders = ids.map(() => '?').join(',');
+  const sql = `DELETE FROM Category WHERE id IN (${placeholders})`;
+
+  const params = ids;
   const result = await db.query(sql, params);
   return result.affectedRows;
 }
