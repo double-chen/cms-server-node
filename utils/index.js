@@ -22,7 +22,6 @@ function buildTree(items) {
 
   // 构建树结构
   items.forEach((item) => {
-    console.log('item', item);
     if (item.parentId === null) {
       tree.push(item);
     } else {

@@ -45,12 +45,12 @@ async function getUserStatus(ctx) {
   return [
     {
       userLabel: '启用',
-      userStatus: 1,
+      userStatus: '启用',
       tagType: 'success',
     },
     {
       userLabel: '禁用',
-      userStatus: 0,
+      userStatus: '禁用',
       tagType: 'danger',
     },
   ];
@@ -138,6 +138,13 @@ async function getUserList(resParams) {
 
   const {
     username,
+    gender,
+    idCard,
+    maxAge,
+    minAge,
+    status,
+    startTime: startTimeR,
+    endTime: endTimeR,
     pageNum: pageNumR = 1,
     pageSize: pageSizeR = 10,
   } = resParams;
@@ -154,6 +161,40 @@ async function getUserList(resParams) {
   if (username) {
     conditions.push('username LIKE ?');
     params.push(`%${username}%`);
+  }
+
+  if (startTimeR && endTimeR) {
+    const startTime = dayjs(startTimeR)
+      .startOf('day')
+      .format('YYYY-MM-DD HH:mm:ss');
+    const endTime = dayjs(endTimeR).endOf('day').format('YYYY-MM-DD HH:mm:ss');
+    conditions.push('createTime BETWEEN ? AND ?');
+    params.push(startTime, endTime);
+  }
+
+  if (gender) {
+    conditions.push('gender = ?');
+    params.push(gender);
+  }
+
+  if (idCard) {
+    conditions.push('idCard = ?');
+    params.push(idCard);
+  }
+
+  if (minAge) {
+    conditions.push('age >= ?');
+    params.push(minAge);
+  }
+
+  if (maxAge) {
+    conditions.push('age <= ?');
+    params.push(maxAge);
+  }
+
+  if (status) {
+    conditions.push('status = ?');
+    params.push(status);
   }
 
   const sql = `SELECT id,

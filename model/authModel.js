@@ -54,7 +54,6 @@ async function getAuthButtons() {
   FROM 
     ButtonAuth;`;
   const result = await db.query(sql);
-  console.log('result', result);
   const groupedButtonAuth = groupByRouteName(result);
   return groupedButtonAuth;
 }

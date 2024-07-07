@@ -8,7 +8,6 @@ class AuthController {
   }
 
   async getAuthButtons(ctx) {
-    console.log('getAuthButtons');
     const result = await authModel.getAuthButtons(ctx);
     ctx.body = result;
   }
