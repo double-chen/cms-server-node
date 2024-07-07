@@ -45,25 +45,30 @@ const baseUserSchema = Joi.object({
     'number.integer': '角色 ID 必须是一个整数',
     'any.required': '角色 ID 是必填项',
   }),
-  password: Joi.string().min(6).required().messages({
-    'string.base': '密码应该是一个字符串',
-    'string.empty': '密码不能为空',
-    'string.min': '密码长度至少为 6 个字符',
-    'any.required': '密码是必填项',
+  createTime: Joi.date().iso().required().messages({
+    'date.base': '创建时间必须是一个有效的日期',
+    'any.required': '创建时间是必填项',
   }),
+  photo: Joi.optional(),
+  // password: Joi.string().min(6).required().messages({
+  //   'string.base': '密码应该是一个字符串',
+  //   'string.empty': '密码不能为空',
+  //   'string.min': '密码长度至少为 6 个字符',
+  //   'any.required': '密码是必填项',
+  // }),
 });
 
 // 新增用户时的验证规则（不包含 userId）
 const createUserSchema = baseUserSchema;
 
-// 更新用户时的验证规则（包含 userId 并且 userId 是必填项）
+// 更新用户时的验证规则（包含 id 并且 id 是必填项）
 const updateUserSchema = baseUserSchema.keys({
-  userId: Joi.number().integer().required(),
+  id: Joi.number().integer().required(),
 });
 
 // 删除用户时的验证规则（只验证 userId）
 const deleteUserSchema = Joi.object({
-  userId: Joi.number().integer().required(),
+  ids: Joi.array().items(Joi.number().required()).required(),
 });
 
 const validateCreateUser = (data) => {

@@ -328,7 +328,7 @@ DROP TABLE IF EXISTS `Users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `Users` (
-  `userId` int NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `gender` enum('male','female','other') NOT NULL,
   `age` int DEFAULT NULL,
@@ -340,7 +340,7 @@ CREATE TABLE `Users` (
   `avatar` varchar(255) DEFAULT NULL,
   `roleId` int DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`userId`),
+  PRIMARY KEY (`id`),
   UNIQUE KEY `idCard` (`idCard`),
   UNIQUE KEY `email` (`email`),
   KEY `fk_role` (`roleId`),

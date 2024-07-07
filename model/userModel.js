@@ -28,11 +28,11 @@ async function getUserGender(ctx) {
   return [
     {
       genderLabel: '男',
-      genderValue: 1,
+      genderValue: '男',
     },
     {
       genderLabel: '女',
-      genderValue: 2,
+      genderValue: '女',
     },
   ];
 }
@@ -156,7 +156,7 @@ async function getUserList(resParams) {
     params.push(`%${username}%`);
   }
 
-  const sql = `SELECT userId,
+  const sql = `SELECT id,
        username,
        gender,
        age,
@@ -175,7 +175,28 @@ async function getUserList(resParams) {
 
   const result = await db.query(sql, params);
 
-  return result;
+  const list = result.map((n) => {
+    return {
+      ...n,
+      createTime: n.createTime
+        ? dayjs(n.createTime).format('YYYY-MM-DD HH:mm:ss')
+        : '',
+    };
+  });
+
+  // 查询总记录数
+  const [countResult] = await db.query(
+    `SELECT COUNT(*) as total FROM Users
+     ${conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : ''}`,
+    params
+  );
+
+  return {
+    list,
+    pageNum,
+    pageSize,
+    total: countResult.total,
+  };
 }
 
 async function addUser(reqParams) {
@@ -226,7 +247,7 @@ async function addUser(reqParams) {
   ];
 
   const result = await db.query(sql, params);
-  return { userId: result.insertId, username, email };
+  return { id: result.insertId, username, email };
 }
 
 async function editUser(reqParams) {
@@ -235,7 +256,7 @@ async function editUser(reqParams) {
   }
 
   const {
-    userId,
+    id,
     username,
     gender,
     age,
@@ -245,6 +266,7 @@ async function editUser(reqParams) {
     status,
     avatar,
     roleId,
+    createTime,
   } = reqParams;
 
   const sql = `
@@ -258,8 +280,9 @@ async function editUser(reqParams) {
       address = ?,  
       status = ?, 
       avatar = ?, 
-      roleId = ?
-  WHERE userId = ?;
+      roleId = ?,
+      createTime = ?
+  WHERE id = ?;
 `;
   const params = [
     username,
@@ -271,26 +294,29 @@ async function editUser(reqParams) {
     status,
     avatar,
     roleId,
-    userId,
+    createTime,
+    id,
   ];
   const result = await db.query(sql, params);
   return result.affectedRows;
 }
 
-async function deleteUser(userId) {
+async function deleteUser(ids) {
   if (config.useMock) {
-    return userMock.deleteUser(userId);
+    return userMock.deleteUser(ids);
   }
 
-  const sql = `DELETE FROM Users WHERE userId = ?;`;
-  const params = [userId];
+  const placeholders = ids.map(() => '?').join(',');
+  const sql = `DELETE FROM Users WHERE id IN (${placeholders})`;
+
+  const params = ids;
   const result = await db.query(sql, params);
   return result.affectedRows;
 }
 
-async function resetUserPassword(userId, password) {
+async function resetUserPassword(id, password) {
   if (config.useMock) {
-    return userMock.resetUserPassword(userId, password);
+    return userMock.resetUserPassword(id, password);
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -299,8 +325,8 @@ async function resetUserPassword(userId, password) {
     UPDATE Users
     SET 
         password = ?
-    WHERE userId = ?;`;
-  const params = [hashedPassword, userId];
+    WHERE id = ?;`;
+  const params = [hashedPassword, id];
   const result = await db.query(sql, params);
   return result.affectedRows;
 }
@@ -459,7 +485,7 @@ async function getUserTreeList(ctx) {
   return userMock.getUserTreeList(ctx);
 }
 
-async function changeUser(userId, status) {
+async function changeUser(id, status) {
   if (config.useMock) {
     return userMock.changeUser(status);
   }
@@ -468,8 +494,8 @@ async function changeUser(userId, status) {
     UPDATE Users
     SET 
         status = ?
-    WHERE userId = ?;`;
-  const params = [status, userId];
+    WHERE id = ?;`;
+  const params = [status, id];
   const result = await query(sql, params);
   return result.affectedRows;
 }
@@ -477,7 +503,7 @@ async function changeUser(userId, status) {
 // 查找用户
 async function findUserByUserName(userName) {
   const sql =
-    'SELECT userId,username,gender,age,idCard,email,address,createTime,status,avatar,roleId,password FROM Users WHERE username = ?';
+    'SELECT id,username,gender,age,idCard,email,address,createTime,status,avatar,roleId,password FROM Users WHERE username = ?';
 
   const params = [userName];
   const result = await db.query(sql, params);

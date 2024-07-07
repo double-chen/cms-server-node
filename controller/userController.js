@@ -95,14 +95,14 @@ class UserController {
       return;
     }
 
-    const result = await userModel.deleteUser(params.userId);
+    const result = await userModel.deleteUser(params.ids);
     ctx.body = result;
   }
 
   async resetUserPassword(ctx) {
     const params = ctx.request.body;
     const result = await userModel.resetUserPassword(
-      params.userId,
+      params.id,
       params.password
     );
     ctx.body = result;

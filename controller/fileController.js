@@ -21,9 +21,11 @@ class FileController {
       ctx.body = { error: 'No file uploaded' };
       return;
     }
+
+    const fileUrl = `${ctx.origin}/uploads/${ctx.file.filename}`;
     ctx.body = {
       filename: file.originalname, // 原始文件名
-      path: file.path, // 上传后的文件路径
+      fileUrl, // 上传后的文件路径
     };
   }
 }

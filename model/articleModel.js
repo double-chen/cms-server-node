@@ -113,6 +113,12 @@ async function getArticleList(resParams) {
       ...n,
       tagIds: n.tagIds ? n.tagIds.split(',') : [],
       tagNames: n.tagIds ? n.tagNames.split(',') : [],
+      createTime: n.createTime
+        ? dayjs(n.createTime).format('YYYY-MM-DD HH:mm:ss')
+        : '',
+      updateTime: n.updateTime
+        ? dayjs(n.updateTime).format('YYYY-MM-DD HH:mm:ss')
+        : '',
     };
   });
 
