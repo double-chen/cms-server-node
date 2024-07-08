@@ -4,14 +4,23 @@ const config = require('../config');
 const { v4: uuidv4 } = require('uuid');
 const db = require('../utils/db');
 
-async function getTagList() {
+async function getTagList(name) {
   if (config.useMock) {
-    return tagMock.getTagList();
+    return tagMock.getTagList(name);
   }
 
-  const sql = `SELECT id,name FROM Tag`;
+  const conditions = [];
+  const params = [];
+  if (name !== undefined && name !== '-1') {
+    conditions.push('name = ?');
+    params.push(name);
+  }
 
-  return await db.query(sql);
+  const sql = `SELECT id,name FROM Tag  ${
+    conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : ''
+  }`;
+
+  return await db.query(sql, params);
 }
 
 async function getTagById(id) {
@@ -56,13 +65,14 @@ async function editTag(reqParams) {
   return result.affectedRows;
 }
 
-async function deleteTag(id) {
+async function deleteTag(ids) {
   if (config.useMock) {
-    return tagMock.deleteTag(id);
+    return tagMock.deleteTag(ids);
   }
 
-  const sql = `DELETE FROM Tag WHERE id = ?;`;
-  const params = [id];
+  const placeholders = ids.map(() => '?').join(',');
+  const sql = `DELETE FROM Tag WHERE id IN (${placeholders})`;
+  const params = ids;
   const result = await db.query(sql, params);
   return result.affectedRows;
 }

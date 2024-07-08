@@ -3,11 +3,13 @@ const {
   validateCreateTag,
   validateUpdateTag,
   validateIdTag,
+  validateIdsTag,
 } = require('../validators/tagValidator');
 
 class TagController {
   async getTagList(ctx) {
-    const result = await tagModel.getTagList();
+    const params = ctx.request.body;
+    const result = await tagModel.getTagList(params.name);
     ctx.body = result;
   }
 
@@ -58,13 +60,13 @@ class TagController {
 
   async deleteTag(ctx) {
     const params = ctx.request.body;
-    const { error } = validateIdTag(params);
+    const { error } = validateIdsTag(params);
 
     if (error) {
       ctx.throw(400, { message: error.details[0].message });
       return;
     }
-    const result = await tagModel.deleteTag(params.id);
+    const result = await tagModel.deleteTag(params.ids);
     if (result > 0) {
       ctx.body = true;
     } else {

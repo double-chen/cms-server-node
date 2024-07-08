@@ -27,6 +27,10 @@ const idTagSchema = Joi.object({
   }),
 });
 
+const idsTagSchema = Joi.object({
+  ids: Joi.array().items(Joi.string().required()).required(),
+});
+
 // 验证添加 Tag 数据
 const validateCreateTag = (data) => {
   return addTagSchema.validate(data);
@@ -42,8 +46,13 @@ const validateIdTag = (data) => {
   return idTagSchema.validate(data);
 };
 
+const validateIdsTag = (data) => {
+  return idsTagSchema.validate(data);
+};
+
 module.exports = {
   validateCreateTag,
   validateUpdateTag,
   validateIdTag,
+  validateIdsTag,
 };
