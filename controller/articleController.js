@@ -64,7 +64,7 @@ class ArticleController {
       return;
     }
 
-    const result = await articleModel.deleteArticle(params.id);
+    const result = await articleModel.deleteArticle(params.ids);
     if (result > 0) {
       ctx.body = true;
     } else {

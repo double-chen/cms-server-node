@@ -22,23 +22,15 @@ const baseArticleSchema = Joi.object({
     'array.base': '标签ID必须是一个数组',
     'any.required': '标签ID是必填项',
   }),
-  thumbnail: Joi.string().uri().required().messages({
-    'string.empty': '缩略图URL不能为空',
+  thumbnail: Joi.string().uri().optional().allow('').messages({
     'string.uri': '缩略图URL格式不正确',
-    'any.required': '缩略图URL是必填项',
   }),
   isPublish: Joi.boolean().required().messages({
     'boolean.base': '发布状态必须是布尔值',
     'any.required': '发布状态是必填项',
   }),
-  createTime: Joi.date().iso().required().messages({
-    'date.base': '创建时间必须是一个有效的日期',
-    'any.required': '创建时间是必填项',
-  }),
-  updateTime: Joi.date().iso().required().messages({
-    'date.base': '更新时间必须是一个有效的日期',
-    'any.required': '更新时间是必填项',
-  }),
+  createTime: Joi.optional(),
+  updateTime: Joi.optional(),
 });
 
 // 新增文章的验证规则（直接使用基础规则）
@@ -54,10 +46,7 @@ const updateArticleSchema = baseArticleSchema.keys({
 
 // 删除文章的验证规则（只验证 articleId）
 const deleteArticleSchema = Joi.object({
-  id: Joi.string().required().messages({
-    'string.empty': '文章ID不能为空',
-    'any.required': '文章ID是必填项',
-  }),
+  ids: Joi.array().items(Joi.string().required()).required(),
 });
 
 const validateCreateArticle = (data) => {

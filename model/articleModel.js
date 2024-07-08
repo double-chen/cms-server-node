@@ -135,7 +135,7 @@ async function getArticleById(id) {
     return articleMock.getArticleById(id);
   }
 
-  const sql = `SELECT title,content,summary,categoryId,tagIds,thumbnail,isPublish FROM Article WHERE id = ?`;
+  const sql = `SELECT id,title,content,summary,categoryId,tagIds,thumbnail,isPublish FROM Article WHERE id = ?`;
   const params = [id];
 
   const result = await db.query(sql, params);
@@ -230,13 +230,14 @@ async function editArticle(reqParams) {
   return result.affectedRows;
 }
 
-async function deleteArticle(id) {
+async function deleteArticle(ids) {
   if (config.useMock) {
-    return articleMock.deleteArticle(id);
+    return articleMock.deleteArticle(ids);
   }
 
-  const sql = `DELETE FROM Article WHERE id = ?;`;
-  const params = [id];
+  const placeholders = ids.map(() => '?').join(',');
+  const sql = `DELETE FROM Article WHERE id IN (${placeholders})`;
+  const params = ids;
   const result = await db.query(sql, params);
   return result.affectedRows;
 }
