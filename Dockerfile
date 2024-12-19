@@ -17,7 +17,7 @@ RUN npm install
 COPY . .
 
 # 暴露应用程序运行的端口（假设应用程序在 3000 端口上运行）
-EXPOSE 3000
+EXPOSE 8080
 
 # 定义容器启动时要运行的命令
 CMD ["node", "app.js"]

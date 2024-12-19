@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  frontend-manage:
+    build:
+      context: ./../cms-front-vue
+      dockerfile: Dockerfile
+    ports:
+      - "3001:80"
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=production
+  frontend-web:
+    build:
+      context: ./../cms-web-vue
+      dockerfile: Dockerfile
+    ports:
+      - "3002:80"
+    depends_on:
+      - backend
+    environment:
+      - NODE_ENV=production
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    environment:
+      - DATABASE_URL=mysql://user:password@mysql:3306/dbname # 示例数据库连接字符串
+  db:
+    image: mysql:8.0
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: cms
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: 123456
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db/backup.sql:/docker-entrypoint-initdb.d/backup.sql
+
+volumes:
+  mysql-data:
