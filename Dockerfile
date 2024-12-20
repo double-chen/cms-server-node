@@ -7,6 +7,9 @@ WORKDIR /app
 # 复制 package.json 和 package-lock.json（如果存在）
 COPY package*.json ./
 
+# 设置 npm 镜像源
+RUN npm config set registry https://registry.npmmirror.com
+
 # 安装应用程序依赖
 RUN npm install
 
@@ -20,4 +23,4 @@ COPY . .
 EXPOSE 8080
 
 # 定义容器启动时要运行的命令
-CMD ["node", "app.js"]
+CMD ["npm", "start"]
