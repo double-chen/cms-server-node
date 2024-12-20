@@ -3,7 +3,7 @@
 # 配置部分
 LOCAL_APP_PATH="/Users/chenchen501/study/cms-server-node"  # 本地应用程序路径
 REMOTE_USER="root"         # 远程服务器用户名
-REMOTE_HOST="116.198.251.215"        # 远程服务器地址
+REMOTE_HOST="116.198.34.49"        # 远程服务器地址
 REMOTE_PATH="/var/www/cms/backend"          # 远程服务器路径
 ARCHIVE_NAME="cms.tar.gz"        # 压缩文件名 
 
