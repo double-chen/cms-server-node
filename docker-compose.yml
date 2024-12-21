@@ -3,8 +3,6 @@ services:
     build:
       context: ./../cms-front-vue
       dockerfile: Dockerfile
-    ports:
-      - "3001:80"
     depends_on:
       - backend
     environment:
@@ -13,8 +11,6 @@ services:
     build:
       context: ./../cms-web-vue
       dockerfile: Dockerfile
-    ports:
-      - "3002:80"
     depends_on:
       - backend
     environment:
@@ -23,8 +19,6 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
-    ports:
-      - "3000:8080"
     depends_on:
       - db
   db:
@@ -39,6 +33,15 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./db/backup.sql:/docker-entrypoint-initdb.d/backup.sql
-
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend-manage
+      - frontend-web
+      - backend
 volumes:
   mysql-data:
