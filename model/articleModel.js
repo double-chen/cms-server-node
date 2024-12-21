@@ -1,8 +1,8 @@
-const dayjs = require('dayjs');
-const { v4: uuidv4 } = require('uuid');
-const articleMock = require('../mock/articleMock');
-const db = require('../utils/db');
-const config = require('../config');
+const dayjs = require("dayjs");
+const { v4: uuidv4 } = require("uuid");
+const articleMock = require("../mock/articleMock");
+const db = require("../utils/db");
+const config = require("../config");
 
 async function getArticleList(resParams) {
   if (config.useMock) {
@@ -29,41 +29,41 @@ async function getArticleList(resParams) {
 
   const offset = (pageNum - 1) * pageSize;
   if (title) {
-    conditions.push('a.title LIKE ?');
+    conditions.push("a.title LIKE ?");
     params.push(`%${title}%`);
   }
 
   if (startTimeR && endTimeR) {
     const startTime = dayjs(startTimeR)
-      .startOf('day')
-      .format('YYYY-MM-DD HH:mm:ss');
-    const endTime = dayjs(endTimeR).endOf('day').format('YYYY-MM-DD HH:mm:ss');
-    conditions.push('a.createTime BETWEEN ? AND ?');
+      .startOf("day")
+      .format("YYYY-MM-DD HH:mm:ss");
+    const endTime = dayjs(endTimeR).endOf("day").format("YYYY-MM-DD HH:mm:ss");
+    conditions.push("a.createTime BETWEEN ? AND ?");
     params.push(startTime, endTime);
   } else if (startTimeR) {
     const startTime = dayjs(startTimeR)
-      .startOf('day')
-      .format('YYYY-MM-DD HH:mm:ss');
-    conditions.push('a.createTime >= ?');
+      .startOf("day")
+      .format("YYYY-MM-DD HH:mm:ss");
+    conditions.push("a.createTime >= ?");
     params.push(startTime);
   } else if (endTimeR) {
-    const endTime = dayjs(endTimeR).endOf('day').format('YYYY-MM-DD HH:mm:ss');
-    conditions.push('a.createTime <= ?');
+    const endTime = dayjs(endTimeR).endOf("day").format("YYYY-MM-DD HH:mm:ss");
+    conditions.push("a.createTime <= ?");
     params.push(endTime);
   }
 
   if (isPublished !== undefined) {
-    conditions.push('a.isPublished = ?');
+    conditions.push("a.isPublished = ?");
     params.push(isPublished);
   }
 
   if (categoryId) {
-    conditions.push('a.categoryId = ?');
+    conditions.push("a.categoryId = ?");
     params.push(categoryId);
   }
 
   if (tagIds && tagIds.length > 0) {
-    const tagPlaceholders = tagIds.map(() => '?').join(', ');
+    const tagPlaceholders = tagIds.map(() => "?").join(", ");
     conditions.push(`jt.tagId IN (${tagPlaceholders})`);
     params.push(...tagIds);
   }
@@ -93,7 +93,7 @@ async function getArticleList(resParams) {
         ) jt ON TRUE
     LEFT JOIN 
         Tag t ON jt.tagId = t.id
-     ${conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : ''}
+    ${conditions.length > 0 ? "WHERE " + conditions.join(" AND ") : ""}
     GROUP BY 
         a.id, c.id   
     ORDER BY a.createTime DESC
@@ -104,21 +104,32 @@ async function getArticleList(resParams) {
   // 查询总记录数
   const [countResult] = await db.query(
     `SELECT COUNT(*) as total FROM Article a
-     ${conditions.length > 0 ? 'WHERE ' + conditions.join(' AND ') : ''}`,
+    JOIN 
+        Category c ON a.categoryId = c.id
+    LEFT JOIN 
+        JSON_TABLE(
+            a.tagIds,
+            '$[*]' COLUMNS (tagId VARCHAR(255) PATH '$')
+        ) jt ON TRUE
+    LEFT JOIN 
+        Tag t ON jt.tagId = t.id
+    ${conditions.length > 0 ? "WHERE " + conditions.join(" AND ") : ""}
+      GROUP BY 
+        a.id, c.id`,
     params
   );
 
   const list = result.map((n) => {
     return {
       ...n,
-      tagIds: n.tagIds ? n.tagIds.split(',') : [],
-      tagNames: n.tagIds ? n.tagNames.split(',') : [],
+      tagIds: n.tagIds ? n.tagIds.split(",") : [],
+      tagNames: n.tagIds ? n.tagNames.split(",") : [],
       createTime: n.createTime
-        ? dayjs(n.createTime).format('YYYY-MM-DD HH:mm:ss')
-        : '',
+        ? dayjs(n.createTime).format("YYYY-MM-DD HH:mm:ss")
+        : "",
       updateTime: n.updateTime
-        ? dayjs(n.updateTime).format('YYYY-MM-DD HH:mm:ss')
-        : '',
+        ? dayjs(n.updateTime).format("YYYY-MM-DD HH:mm:ss")
+        : "",
     };
   });
 
@@ -126,7 +137,7 @@ async function getArticleList(resParams) {
     list,
     pageNum,
     pageSize,
-    total: countResult.total,
+    total: countResult ? countResult.total : 0,
   };
 }
 
@@ -151,8 +162,8 @@ async function addArticle(reqParams) {
     reqParams;
 
   const id = uuidv4();
-  const createTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
-  const updateTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
+  const createTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+  const updateTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
   const sql = `
         INSERT INTO Article (
@@ -200,7 +211,7 @@ async function editArticle(reqParams) {
     isPublish,
   } = reqParams;
 
-  const updateTime = dayjs().format('YYYY-MM-DD HH:mm:ss');
+  const updateTime = dayjs().format("YYYY-MM-DD HH:mm:ss");
 
   const sql = `
   UPDATE Article
@@ -235,7 +246,7 @@ async function deleteArticle(ids) {
     return articleMock.deleteArticle(ids);
   }
 
-  const placeholders = ids.map(() => '?').join(',');
+  const placeholders = ids.map(() => "?").join(",");
   const sql = `DELETE FROM Article WHERE id IN (${placeholders})`;
   const params = ids;
   const result = await db.query(sql, params);

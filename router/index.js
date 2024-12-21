@@ -52,18 +52,14 @@ function getRouter() {
   router.post("/user/change", authenticate, userController.changeUser);
 
   // 文章相关
-  router.post("/article/list", authenticate, articleController.getArticleList);
-  router.get("/article/detail", authenticate, articleController.getArticleById);
+  router.post("/article/list", articleController.getArticleList);
+  router.get("/article/detail", articleController.getArticleById);
   router.post("/article/add", authenticate, articleController.addArticle);
   router.post("/article/edit", authenticate, articleController.editArticle);
   router.post("/article/delete", authenticate, articleController.deleteArticle);
 
   // 文章分类
-  router.post(
-    "/category/list",
-    authenticate,
-    categoryController.getCategoryList
-  );
+  router.post("/category/list", categoryController.getCategoryList);
   router.get(
     "/category/detail",
     authenticate,
@@ -78,7 +74,7 @@ function getRouter() {
   );
 
   // 文章标签
-  router.post("/tag/list", authenticate, tagController.getTagList);
+  router.post("/tag/list", tagController.getTagList);
   router.get("/tag/detail", authenticate, tagController.getTagById);
   router.post("/tag/add", authenticate, tagController.addTag);
   router.post("/tag/edit", authenticate, tagController.editTag);
